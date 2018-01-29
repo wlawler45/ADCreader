@@ -1,0 +1,97 @@
+# depslib dependency file v1.0
+1516877141 source:c:\users\william\documents\application letters and forms\code\adcreader\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<conio.h>
+	"Plx.h"
+	"PlxApi.h"
+	"PlxInit.h"
+
+1516842460 source:c:\plx\plxsdk\samples\apitest\apitest.c
+	<time.h>
+	"C:\Plx\PlxSdk\Include\Plx.h"
+	"C:\Plx\PlxSdk\Include\PlxApi.h"
+	"C:\Plx\PlxSdk\Samples\Shared\ConsFunc.h"
+	"C:\Plx\PlxSdk\Samples\Shared\PlxInit.h"
+	"ConsFunc.h"
+	"PlxInit.h"
+
+1486411502 c:\plx\plxsdk\include\plx.h
+
+1451551892 c:\plx\plxsdk\include\plxapi.h
+	"PlxDefCk.h"
+	"Plx.h"
+	"PlxTypes.h"
+	"PexApi.h"
+
+1451551892 c:\plx\plxsdk\include\plxdefck.h
+
+1516838035 c:\plx\plxsdk\include\plxtypes.h
+	"Plx.h"
+	"PlxDefCk.h"
+	"PlxStat.h"
+	"PciTypes.h"
+
+1451551892 c:\plx\plxsdk\include\plxstat.h
+
+1516837979 c:\plx\plxsdk\include\pcitypes.h
+	<stdint.h>
+	<wdm.h>
+	<ntddk.h>
+	<wtypes.h>
+	<memory.h>
+	<linux/types.h>
+	<limits.h>
+
+1516837823 c:\plx\plxsdk\include\pexapi.h
+	"C:\Plx\PlxSdk\Include\PlxTypes.h"
+
+1467746714 c:\plx\plxsdk\samples\shared\consfunc.h
+	<stdio.h>
+	<conio.h>
+	<Windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<termios.h>
+	<sys/ioctl.h>
+	<sys/time.h>
+	<sys/types.h>
+	<stdio.h>
+	<conio.h>
+	<string.h>
+	<unistd.h>
+	<dpmi.h>
+
+1516835123 c:\plx\plxsdk\samples\shared\plxinit.h
+	"C:\Plx\PlxSdk\Include\PlxTypes.h"
+
+1516841122 source:c:\plx\plxsdk\samples\dslave_bypassapi\dslave_bypassapi.c
+	"C:\Plx\PlxSdk\Include\PlxApi.h"
+	"..\\Shared\\ConsFunc.h"
+	"..\\Shared\\PlxInit.h"
+	"ConsFunc.h"
+	"PlxInit.h"
+
+1467746714 c:\plx\plxsdk\samples\\shared\\consfunc.h
+	<stdio.h>
+	<conio.h>
+	<Windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<termios.h>
+	<sys/ioctl.h>
+	<sys/time.h>
+	<sys/types.h>
+	<stdio.h>
+	<conio.h>
+	<string.h>
+	<unistd.h>
+	<dpmi.h>
+
+1516835123 c:\plx\plxsdk\samples\\shared\\plxinit.h
+	"C:\Plx\PlxSdk\Include\PlxTypes.h"
+
