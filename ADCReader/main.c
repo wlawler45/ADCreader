@@ -47,6 +47,9 @@ If config not working move reset to front and try again
 */
 void pciConfig(PLX_DEVICE_OBJECT *Device){
     PLX_STATUS        rc;
+    U32 regvalue;
+    regvalue=PlxPci_PciRegisterReadFast(Device,PLL_address,rc);
+    printf(regvalue); //code to test if registers are reading the default values correctly.
     rc =PlxPci_PciRegisterWriteFast(Device,PLL_address,PLL_register);
 
     if (rc != PLX_STATUS_OK)
