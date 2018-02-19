@@ -43,6 +43,7 @@ PLX_DEVICE_OBJECT pciInit(){
 }
 /*
 pciConfig function writes values to registers on the PCI controller to successfully initialize and configure the ADC chip and checks to make sure each configuration write finishes successfully
+If config not working move reset to front and try again
 */
 void pciConfig(PLX_DEVICE_OBJECT *Device){
     PLX_STATUS        rc;
