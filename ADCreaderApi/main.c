@@ -5,6 +5,7 @@
 //------------------------------------------------------------------------------
 // Revision  Date        Name      Comments
 // 1.0		 06/03/14	 Gary	   Initial Release
+// 1.1		 02/19/18	 William	Adjustment to sample data at specific rate and save to file
 //------------------------------------------------------------------------------
 #include <windows.h>
 #include <stdio.h>
@@ -58,6 +59,7 @@ U32 *wBuff;
 
 U8 contRunning;
 volatile U8 contThreadStatus;
+//register values and addresses to be loaded in
 U32 BCR_register= 0x008310;
 //
 U32 PLL_register= 0x00200064;
@@ -73,6 +75,7 @@ U32 buffer_on_register=0x00380FFE; ///to turn on collection
 void main(int argc, char * argv[])
 {
   //CursorVisible(FALSE);
+	//Sets up
   FILE *output;
     char *mode= "w";
     char *filename;
