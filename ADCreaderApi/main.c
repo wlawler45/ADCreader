@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 // Revision  Date        Name      Comments
 // 1.0		 06/03/14	 Gary	   Initial Release
-// 1.1		 02/19/18	 William	Adjustment to sample data at specific rate and save to file
+// 1.1       02/19/18    William    Adjustment to sample data at specific rate and save to file
 //------------------------------------------------------------------------------
 #include <windows.h>
 #include <stdio.h>
@@ -59,7 +59,6 @@ U32 *wBuff;
 
 U8 contRunning;
 volatile U8 contThreadStatus;
-//register values and addresses to be loaded in
 U32 BCR_register= 0x008310;
 //
 U32 PLL_register= 0x00200064;
@@ -75,12 +74,13 @@ U32 buffer_on_register=0x00380FFE; ///to turn on collection
 void main(int argc, char * argv[])
 {
   //CursorVisible(FALSE);
-	//Sets up
+  //creates file to save data to
   FILE *output;
     char *mode= "w";
     char *filename;
     filename="data.csv";
     char exitchar=NULL;
+    //identifies board
   ulNumBds = DSI6LN_FindBoards(&cBoardInfo[0], &ulErr);
   if(ulErr)
   {
@@ -171,7 +171,7 @@ void main(int argc, char * argv[])
 } /* end main */
 
 //------------------------------------------------------------------------------
-// Initialization Verification
+// Initialization Verification- loads in register values for ADC operation
 //------------------------------------------------------------------------------
 void init_verify(void)
 {
@@ -220,10 +220,6 @@ void init_verify(void)
   printf("Board Config *Undocumented = %08X",  ValueRead);
 
   PutCursor(CurX,CurY++);
-  ValueRead = DSI6LN_Read_Local32(ulBdNum, &ulErr, GPS_SYNC);
-  printf("GPS Synchronization        = %08X",  ValueRead);
-
-  PutCursor(CurX,CurY++);
   ValueRead = DSI6LN_Read_Local32(ulBdNum, &ulErr, INPUT_DATA_BUFFER);
   printf("Input Data Register        = %08lX", ValueRead);
 
@@ -236,7 +232,7 @@ void init_verify(void)
 
 
 //------------------------------------------------------------------------------
-// DMA Test
+// DMA Test-- requests data from the DMA registers of saved ADC data
 //------------------------------------------------------------------------------
 void DmaTest(FILE *output)
 {
@@ -250,6 +246,8 @@ void DmaTest(FILE *output)
   int ok,i;
   U32 nVco,nRef,nDiv;
   double actualFreq;
+  U32 tempdata;
+  double voltage;
 
   ClrScr();
   CurX=CurY=2;
@@ -292,10 +290,11 @@ void DmaTest(FILE *output)
   }
   event[0].hEvent = (uint64_t)fbHandle;
   //Sleep(3000);
+  //enable interrupt for ADC to trigger DMA transfer
   DSI6LN_EnableInterrupt(ulBdNum, 0x03, LOCAL, &ulErr);
   DSI6LN_Register_Interrupt_Notify(ulBdNum, &event[0], 0x03, LOCAL, &ulErr);
 
-
+ //allocate memory
   memset(Data,0,0x40000);
   memset(uData,0,0x40000);
   DSI6LN_Open_DMA_Channel(ulBdNum,0,&ulErr);
@@ -330,9 +329,14 @@ void DmaTest(FILE *output)
 				ShowAPIError(ulErr);
 				printf("\nError from Bd#%ld\n",ulBdNum);
 			}
+            //save data to file
+            for(int i=0;i>0x1FFF8;i+=4){ //iterates through all data transferred during the DMA
+                if(Data[i+3]=0x01){ //takes only data from channel 1
+                    tempdata=(Data[i+2]<<16)+(Data[i+1]<<8)+Data[i]; //stores 24 bit data
+                    voltage= ((5.9604*10^-7)*(double)(tempdata))-5.0;//changes hex value to voltage value reading
+                    fprintf(output,"\n%f",voltage); //saves voltage to file
+                }
 
-            for(int i=0;i>0x1FFF8;i++){
-                fprintf(output,"/n%d",Data[i]);
             }
 
 		}
@@ -358,92 +362,6 @@ void DmaTest(FILE *output)
 
 
 
-// Function to write data to disk when told
-
-DWORD WINAPI
-InterruptAttachThreadDma(
-    LPVOID pParam
-    )
-{
-  FILE *myFile[1024];
-  U32 wSize;
-  U32 b1Written = 0;
-  U32 b2Written = 0;
-  U32 samplesWritten = 0;
-  char fName[256];
-  int filenum = 0;
-  int k,l;
-  int files_needed;
-  double total_written;
-  double bytes_needed;
-
-  bytes_needed = *((double *)(pParam));
-  if(bytes_needed < 3000000000.0)
-   files_needed = 1;
-  else
-   files_needed = ((int)(bytes_needed / 3000000000.0)+1);
-  if(files_needed >= 1024)
-	  files_needed = 1024;
-  for(k=0; k<files_needed; k++){
-  	sprintf(fName,"DSIData%04d.txt",k);
-  myFile[k] = fopen(fName,"w+b"); // Doesn't append, always overwrites
-  if(myFile[k] == NULL){
-	  printf("\n  Error opening file for save.. Cannot continue");
-	  l=k;
-	  for(l=0; l<k; l++)
-	  fclose(myFile[l]);
-	  contThreadStatus = 0;
-	  return 0;
-  }
-  } // end For()
-
-  b1Done = 1;
-  b2Done = 1;
-  total_written = 0.0;
-
-  // Signal that thread is ready
-    contThreadStatus = 1;
-
-    while(contRunning){
-	   if(samplesWritten > 750000000){
-		 total_written += (double)samplesWritten;
-   	     filenum++;
-		 samplesWritten = 0;
-		   }
-		if(b1Ready && !b1Written){
-		   b1Done = 0;
-		   wSize = b1Ready;
-		   samplesWritten += b1Ready;
-	       memmove(wBuff,Buff1,wSize*4); // BYTES
-		   b1Done = 1;
-		   fwrite(wBuff,sizeof(U32),wSize,myFile[filenum]);
-           printf("*");
-		   b1Written = 1;
-		   b2Written = 0;
-		}
-		if(b2Ready && !b2Written){
-		   b2Done = 0;
-		   wSize = b2Ready;
-		   samplesWritten += b2Ready;
-	       memmove(wBuff,Buff2,wSize*4); // BYTES
-		   b2Done = 1;
-		   fwrite(wBuff,sizeof(U32),wSize,myFile[filenum]);
-           printf("+");
-		   b2Written = 1;
-		   b1Written = 0;
-		}
-	 Sleep(100);
-
-	} // End while(contRunning)
-
-	for(k=0; k<files_needed; k++)
-	  fclose(myFile[k]);
-	if(filenum == 0)
-		total_written = (double)samplesWritten;
-    printf("\n  %.1lf Samples successfully written ..   \n",total_written);
-    contThreadStatus = 0;
- return 0;
-}
 
 //==============================================================================
 
@@ -455,7 +373,7 @@ void PutCursor(U32 FixedX, U32 FixedY)
   PositionCursor((U16) FixedX,(U16) FixedY);
 }
 
-
+//Calculates parameters -- makes sure that used parameters achieve correct desired frequency
 //==============================================================================
 double calc_Parameters(U32* nVco, U32* nRef, U32* nDiv, double desired_Freq){
 
