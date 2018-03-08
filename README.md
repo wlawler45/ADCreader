@@ -10,4 +10,5 @@ Link Libraries in build options: 24DSI6LN eDriver C.lib
 
 Compiler Search Directories:  C:\Program Files(x86)\General Standards\24DSI
                              
-     
+Code in ADCreader folder is deprecated and uses incorrect library
+ADCreaderApi is current version and uses correct library
