@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1519082295 source:c:\users\tester2018\documents\adcreaderapi\adcreaderapi\main.c
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<math.h>
+	<time.h>
+	<memory.h>
+	"CioColor.h"
+	"Tools.h"
+	"24DSI6LNeintface.h"
+
+1442592432 c:\users\tester2018\documents\24dsi\ciocolor.h
+
+1519082112 c:\users\tester2018\documents\24dsi\tools.h
+
+1519082194 c:\users\tester2018\documents\24dsi\24dsi6lneintface.h
+	<stdint.h>
+
+1441036376 source:c:\users\tester2018\documents\24dsi\tools.c
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<time.h>
+	"CioColor.h"
+	"Tools.h"
+
+1441029176 source:c:\users\william\documents\application letters and forms\code\24dsi\tools.c
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<time.h>
+	"CioColor.h"
+	"Tools.h"
+
+1442585232 c:\users\william\documents\application letters and forms\code\24dsi\ciocolor.h
+
+1519078514 c:\users\william\documents\application letters and forms\code\24dsi\tools.h
+
+1519095228 source:c:\users\william\documents\application letters and forms\code\adcreaderapi\adcreaderapi\main.c
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<math.h>
+	<time.h>
+	<memory.h>
+	"CioColor.h"
+	"Tools.h"
+	"24DSI6LNeintface.h"
+
+1519078596 c:\users\william\documents\application letters and forms\code\24dsi\24dsi6lneintface.h
+	<stdint.h>
+

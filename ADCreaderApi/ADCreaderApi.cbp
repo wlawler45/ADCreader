@@ -2,27 +2,26 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="ADCReader" />
+		<Option title="ADCreaderApi" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Script file="lib_finder.script" />
 			<Target title="Debug">
-				<Option output="bin/Debug/ADCReader" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/ADCreaderApi" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="C:/Plx/PlxSdk/Include" />
-					<Add directory="C:/Plx/PlxSdk/Samples/Shared" />
+					<Add directory="C:/Users/Tester2018/Documents/ADCreaderApi/ADCreaderApi/" />
+					<Add directory="../../24DSI" />
 				</Compiler>
 				<Linker>
-					<Add library="C:\Plx\PlxSdk\PlxApi\Release\PlxApi.lib" />
+					<Add library="../../24DSI/24DSI6LN eDriver C.lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/ADCReader" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/ADCreaderApi" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -37,6 +36,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../../24DSI/Tools.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -44,7 +46,6 @@
 			<code_completion />
 			<envvars />
 			<debugger />
-			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
